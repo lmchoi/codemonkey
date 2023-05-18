@@ -79,15 +79,15 @@ public class MainMenuScreen implements Screen {
 
     // setup the camera
     camera.update();
-    game.batch.setProjectionMatrix(camera.combined);
+    game.setupProjection(camera.combined);
 
-    game.batch.begin();
-    game.font.draw(game.batch, "Drops Collected: " + dropsGathered, 0, 480);
-    game.batch.draw(bucketImage, bucket.x, bucket.y);
+    game.beginRendering();
+    game.drawText("Drops Collected: " + dropsGathered, 0, 480);
+    game.draw(bucketImage, bucket.x, bucket.y);
     for (Rectangle raindrop : raindrops) {
-      game.batch.draw(dropImage, raindrop.x, raindrop.y);
+      game.draw(dropImage, raindrop.x, raindrop.y);
     }
-    game.batch.end();
+    game.endRendering();
 
     // controls
     if (Gdx.input.isTouched()) {
