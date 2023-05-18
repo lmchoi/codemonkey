@@ -17,8 +17,13 @@ buildscript {
     }
 }
 
+plugins {
+  id "com.diffplug.spotless" version "6.18.0" apply false
+}
+
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: "com.diffplug.spotless"
 
     version = '1.0'
     ext {
@@ -40,17 +45,30 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://jitpack.io" }
     }
+
 }
 
 project(":desktop") {
     apply plugin: "java-library"
-
+    apply plugin: "com.diffplug.spotless"
 
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         
+    }
+
+    spotless {
+        java {
+            importOrder('java|javax', 'com.acme', '', '\\#com.acme', '\\#')
+            removeUnusedImports()
+            cleanthat()
+            // googleJavaFormat()
+            prettier()
+            formatAnnotations()
+            // licenseHeader '/* (C) $YEAR */'
+        }
     }
 }
 
@@ -87,10 +105,19 @@ project(":html") {
 
 project(":core") {
     apply plugin: "java-library"
-
+    apply plugin: "com.diffplug.spotless"
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        api "com.badlogicgames.gdx:gdx:$gdxVersion"   
+    }
+
+    spotless {
+        java {
+            importOrder('java|javax', 'com.acme', '', '\\#com.acme', '\\#')
+            removeUnusedImports()
+            cleanthat()
+            googleJavaFormat()
+            formatAnnotations()
+        }
     }
 }
