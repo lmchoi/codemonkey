@@ -64,8 +64,7 @@ project(":desktop") {
             importOrder('java|javax', 'com.acme', '', '\\#com.acme', '\\#')
             removeUnusedImports()
             cleanthat()
-            // googleJavaFormat()
-            prettier()
+            googleJavaFormat()
             formatAnnotations()
             // licenseHeader '/* (C) $YEAR */'
         }
